@@ -1,0 +1,6 @@
+[theme]
+primaryColor = "#F59E0B" # An amber accent color
+backgroundColor = "#0E1117" # Deep dark background
+secondaryBackgroundColor = "#262730" # Slightly lighter for sidebars
+textColor = "#FAFAFA"
+font = "sans serif"

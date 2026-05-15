@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  # ----------------------------------------
+  # 1. FastAPI Serving Layer
+  # ----------------------------------------
+  api:
+    build: 
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: neuralretail_api
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_ENV=development
+      - REDIS_URL=redis://redis_cache:6379/0
+      - DATABASE_URL=postgresql://postgres:securepassword123@postgres_db:5432/neuralretail_db
+      - JWT_SECRET_KEY=dev_secret_do_not_use_in_prod
+    depends_on:
+      postgres_db:
+        condition: service_healthy
+      redis_cache:
+        condition: service_started
+    networks:
+      - retail_net
+
+  # ----------------------------------------
+  # 2. Redis 8 (Feature Cache & Session)
+  # ----------------------------------------
+  redis_cache:
+    image: redis:8.0-M02-alpine # Preview tag for Redis 8
+    container_name: neuralretail_redis
+    ports:
+      - "6379:6379"
+    networks:
+      - retail_net
+
+  # ----------------------------------------
+  # 3. PostgreSQL 17 (OLTP & Metadata)
+  # ----------------------------------------
+  postgres_db:
+    image: postgres:17-alpine
+    container_name: neuralretail_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: securepassword123
+      POSTGRES_DB: neuralretail_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - retail_net
+
+networks:
+  retail_net:
+    driver: bridge
+
+volumes:
+  pg_data:
