@@ -58,13 +58,5 @@ Login Password: admin2026
 
 Developed as a Production-Grade AI Platform following Amdocs PRD Requirements.
 
-### **Quick Reminder on how to push it:**
-1.  In VS Code, click the **New File** icon in the `NeuralRetail` folder and name it `README.md`.
-2.  Paste the code above and **Save** it.
-3.  Run these final commands in your terminal:
-    ```bash
-    git add README.md
-    git commit -m "docs: add comprehensive project documentation"
-    git push origin main
-    ```
+```
     
