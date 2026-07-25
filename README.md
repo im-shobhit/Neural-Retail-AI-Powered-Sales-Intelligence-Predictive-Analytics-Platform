@@ -47,6 +47,9 @@ python -m streamlit run dashboard/app.py
 ```
 Login Password: admin2026
 
+<img width="1920" height="1020" alt="Screenshot 2026-05-29 171635" src="https://github.com/user-attachments/assets/f159cfd8-325b-445c-8075-e424e23c9d65" />
+
+
 ---
 
 📊 Business Objectives Met
